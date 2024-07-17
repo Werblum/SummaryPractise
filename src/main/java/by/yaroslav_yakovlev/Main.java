@@ -26,8 +26,8 @@ public class Main {
 //            correctEmployees_WithProjectN_WherePostIsM_ToProjectK(connection, 1, 2, 3);
 //            correctSalaryWhereEmployment_dateMore3Years(connection);
 //            getDepartmentWhereMaxEmployees(connection);
-//            removeEmployeesWhereRatingUnder1(connection);
-//            getAvgSalaryWhereAgeMore30(connection);
+//            removeEmployeesWhereRatingUnder1(connection, 3);
+            getAvgSalaryWhereAgeMore30(connection);
 //            removeEmployee(connection, 3);
         } catch (SQLException e) {
             if (e.getSQLState().startsWith("23")) {
@@ -122,7 +122,6 @@ public class Main {
                     param6 + " | " + param7 + " | " + param8 + " | " +
                     param9 + " | " + param10);
         }
-
     }
 
     private static void getEmployeesWhereDepartmentIsN_PostIsM(Connection connection) throws SQLException {
@@ -148,7 +147,6 @@ public class Main {
             System.out.println(param0 + " | " + param1 + " | " + param2 + " | " +
                     param3 + " | " + param4 + " | " + param5);
         }
-
     }
 
     private static void correctStatusProjectNToStatusM(Connection connection, int id, int status_id) throws SQLException {
@@ -197,8 +195,9 @@ public class Main {
 
     }
 
-    private static void removeEmployeesWhereRatingUnder1(Connection connection) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("DELETE from employees WHERE rating < 1");
+    private static void removeEmployeesWhereRatingUnderN(Connection connection, int rating) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("DELETE from employees WHERE rating < ?");
+        statement.setInt(1, rating);
         int count = statement.executeUpdate();
         System.out.println("DELETE " + count + " strings");
     }
